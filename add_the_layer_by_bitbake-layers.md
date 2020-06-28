@@ -162,7 +162,57 @@ Use bitbake-layers <subcommand> --help to get help on a specific command
    meta-example          /home/max/stm32mp1/meta-example   6
    ```
 
-4. Finally we can remove workspace layer (i.e. `w1` in our case) from current build environment.
+  Let's build the `cpputest-example` recipe to make sure it works. Before we build the recipe, we run the `bitbake -c clean cpputest-example` command to clean up the tmp dir for the `cpputest-example` recipe.
+
+  ```text
+  max@p50-2:~/stm32mp1 $ bitbake cpputest-example -c clean
+  ...
+  max@p50-2:~/stm32mp1 $ bitbake cpputest-example
+  NOTE: Started PRServer with DBfile: /home/max/stm32mp1/openstlinux-20-02-19/build-openstlinuxweston-stm32mp1/cache/prserv.sqlite3, IP: 127.0.0.1, PORT: 43001, PID: 15076
+  Loading cache: 100% |###################################################################################################################| Time: 0:00:00Loaded 3579 entries from dependency cache.
+  NOTE: Resolving any missing task queue dependencies
+  
+  Build Configuration:
+  BB_VERSION           = "1.40.0"
+  BUILD_SYS            = "x86_64-linux"
+  NATIVELSBSTRING      = "universal"
+  TARGET_SYS           = "arm-ostl-linux-gnueabi"
+  MACHINE              = "stm32mp1"
+  DISTRO               = "openstlinux-weston"
+  DISTRO_VERSION       = "2.6-snapshot-20200628"
+  TUNE_FEATURES        = "arm armv7ve vfp thumb neon vfpv4 callconvention-hard cortexa7"
+  TARGET_FPU           = "hard"
+  DISTRO_CODENAME      = "thud"
+  ACCEPT_EULA_stm32mp1 = "1"
+  GCCVERSION           = "8.%"
+  PREFERRED_PROVIDER_virtual/kernel = "linux-stm32mp"
+  meta-python
+  meta-oe
+  meta-oe
+  meta-gnome
+  meta-xfce
+  meta-initramfs
+  meta-multimedia
+  meta-networking
+  meta-webserver
+  meta-filesystems
+  meta-perl
+  meta-python          = "HEAD:436cf0aa2b2802da706588d4daa1a8240d172df8"
+  meta-st-stm32mp      = "HEAD:8055ad11c92144e4a147a00834de53a2de21e42d"
+  meta-qt5             = "HEAD:1520d5b2b2beec5e1c3209d3178219e93ef08bca"
+  meta-st-openstlinux  = "HEAD:f023f39b13fa13f6391be5fbc10fb2bf7369402a"
+  meta                 = "HEAD:cd7cf933b3235560ec71576d8f3836dff736a39f"
+  meta-custom          = "static_boost_lib:9a59536026d852d9b958ba738930faca6d1fd8f7"
+  meta-example         = "<unknown>:<unknown>"
+  
+  Initialising tasks: 100% |##############################################################################################################| Time: 0:00:00Sstate summary: Wanted 11 Found 11 Missed 0 Current 134 (100% match, 100% complete)
+  NOTE: Executing SetScene Tasks
+  NOTE: Executing RunQueue Tasks
+  NOTE: Tasks Summary: Attempted 581 tasks of which 580 didn't need to be rerun and all succeeded.
+  NOTE: Writing buildhistory
+  ```
+
+4. Finally we can remove the workspace layer (i.e. `w1` in our case) from current build environment.
 
    To remove the `w1` layer from current build environment, execute `bitake-layers remove-layer` command from build directory of current build environment.
 
