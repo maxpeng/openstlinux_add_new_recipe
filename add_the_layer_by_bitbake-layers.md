@@ -1,4 +1,6 @@
-## Using bitbake-layers
+# OpenSTLinux - Creating a recipe for a git source tree
+
+## Part 2 - Using bitbake-layers to add the recipe to the build environment
 
 Yocto/OpenEmbedded provides a BitBake layer management tool called `bitbake-layers`. Using the `--help` option gives you a list of subcommands.
 

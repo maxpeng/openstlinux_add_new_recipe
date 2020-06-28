@@ -1,14 +1,21 @@
 # OpenSTLinux - Creating a recipe for a git source tree
 
-## Abstract
+## Part 1 - Creating the recipe by devtool
 
-1. Using `devtool` to create a recipe from the source tree of a software package checked out from a git repository.
-2. Using `bitbake-layers` to create a layer for placing the recipe.
-3. Populating the recipe to the layer.
+This part describes how to use `devtool` to create a recipe from a source tree checked out from a git repository.
 
-## Creating the recipe by devtool
+[cpputest_example] is an example demonstrating the usage of [Cpputest](http://cpputest.github.io/manual.html), it is hosted in github - https://github.com/maxpeng/cpputest_example and uses [CMake](https://cmake.org/) as the build system. I use it as an example to demonstrate how to use `devtool` to create a recipe for it.
 
-[cpputest_example](https://github.com/maxpeng/cpputest_example) is an example demonstrating the usage of [Cpputest](http://cpputest.github.io/manual.html), it uses [CMake](https://cmake.org/) as the build system. I use it as an example to demonstrate how to use `devtool` to create a recipe for it. Before you are able to use `devtool`, you need to source the build environment setup script.
+This is the actual execution result of the executable, built by the recipe, runs on the [STM32MP157C-DK2 discovery board]:
+
+```text
+root@stm32mp1:~# cpputest_example_pythagorean
+Hypotenuse of a right triangle with 2 sides as (30, 40) is 50.00.
+```
+
+### devtool
+
+Before you are able to use `devtool`, you need to source the build environment setup script.
 
 Using the `--help` option of `devtool` gives you a list of subcommands.
 
@@ -61,9 +68,11 @@ Using the `--help` option of `devtool` gives you a list of subcommands.
    Use devtool <subcommand> --help to get help on a specific command
    ```
 
-These are the steps of using `devtool` to create a recipe for it:
+### Steps of creating the recipe by devtool
 
-1. Clone the source.
+These are the steps of using `devtool` to create a recipe for [cpputest_example]:
+
+1. Clone the source from github.
 
    ```text
    ~/stm32mp1 $ git clone https://github.com/maxpeng/cpputest_example.git
@@ -201,8 +210,13 @@ These are the steps of using `devtool` to create a recipe for it:
    NOTE: Writing buildhistory
    ```
 
+In the next part - [Part 2 - Using bitbake-layers to add the recipe to the build environment](add_the_layer_by_bitbake-layers.md), I will describe how to use `bitbake-layers` to create a new layer, populate the recipe to the new  layer, and finally add the new layer to the build environment.
+
 ## References
 
 1. [STM32 MPU Wiki - OpenEmbedded - devtool](https://wiki.st.com/stm32mpu/wiki/OpenEmbedded_-_devtool)
 2. [Yocto Project Application Development and the Extensible Software Development Kit (eSDK) - Using devtool in Your SDK Workflow](https://www.yoctoproject.org/docs/current/sdk-manual/sdk-manual.html#using-devtool-in-your-sdk-workflow)
 3. [Yocto Project Reference Manual - devtool Quick Reference](https://www.yoctoproject.org/docs/3.1/ref-manual/ref-manual.html#ref-devtool-reference) 
+
+[cpputest_example]: https://github.com/maxpeng/cpputest_example
+[STM32MP157C-DK2 discovery board]: https://www.st.com/en/evaluation-tools/stm32mp157c-dk2.html
