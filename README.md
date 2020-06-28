@@ -3,7 +3,7 @@
 
 ## Introduction
 
-Last month one of my friend, who is a FAE of STMicroelectronics, told me that  STMicroelectronics released a new [STM32MP1 series microprocessor](https://www.st.com/en/microcontrollers-microprocessors/stm32mp1-series.html) last year. Each of STM32Mp1 series microprocessor has Arm Cortex-A7 and Cortex-M4 cores, therefore we could run a Linux OS on it. Since my friend knows that I am pretty interested in Linux, he suggested me to take a look that new product.
+Last month one of my friends, who is a FAE of STMicroelectronics, told me that  STMicroelectronics released a new [STM32MP1 series microprocessor](https://www.st.com/en/microcontrollers-microprocessors/stm32mp1-series.html) last year. Each of STM32Mp1 series microprocessor has Arm Cortex-A7 and Cortex-M4 cores, therefore we could run a Linux OS on it. Since my friend knows that I am pretty interested in Linux, he suggested me to take a look that new product.
 
 ![STM32MP157C-DK2](https://www.st.com/bin/ecommerce/api/image.PF267415.en.feature-description-include-personalized-no-cpn-medium.jpg)
 

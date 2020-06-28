@@ -4,7 +4,7 @@
 
 This part describes how to use `devtool` to create a recipe from a source tree checked out from a git repository.
 
-[cpputest_example] is an example demonstrating the usage of [Cpputest](http://cpputest.github.io/manual.html), it is hosted in github - https://github.com/maxpeng/cpputest_example and uses [CMake](https://cmake.org/) as the build system. I use it as an example to demonstrate how to use `devtool` to create a recipe for it.
+[cpputest_example] is an example demonstrating the usage of [Cpputest](http://cpputest.github.io/manual.html), it is hosted on github - https://github.com/maxpeng/cpputest_example and uses [CMake](https://cmake.org/) as the build system. I use it as an example to demonstrate how to use `devtool` to create a recipe for it.
 
 This is the actual execution result of the executable, built by the recipe, runs on the [STM32MP157C-DK2 discovery board]:
 
