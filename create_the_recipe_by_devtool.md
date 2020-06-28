@@ -13,7 +13,7 @@ root@stm32mp1:~# cpputest_example_pythagorean
 Hypotenuse of a right triangle with 2 sides as (30, 40) is 50.00.
 ```
 
-### devtool
+### `devtool` command
 
 Before you are able to use `devtool`, you need to source the build environment setup script.
 
@@ -68,20 +68,78 @@ Using the `--help` option of `devtool` gives you a list of subcommands.
    Use devtool <subcommand> --help to get help on a specific command
    ```
 
+### Prerequisites
+
+Before we go through the steps to create the recipe, you need to install [STM32MP1 Distribution Package](https://wiki.st.com/stm32mpu/wiki/STM32MP1_Distribution_Package). You can follow the documentation of STM32MP1 Wiki - [Installing the OpenSTLinux distribution](https://wiki.st.com/stm32mpu/wiki/STM32MP1_Distribution_Package#Installing_the_OpenSTLinux_distribution) to install it.
+
+In the remainder of this post, I assume you have installed the distribution to `~/stm32mp1/openstlinux-20-02-19` directory, and you have source the build environment setup script from the installation directory.
+
+```text
+~/stm32mp1/openstlinux-20-02-19 $ DISTRO=openstlinux-weston MACHINE=stm32mp1 source layers/meta-st/scripts/envsetup.sh
+[HOST DISTRIB check]
+Linux Distrib: Ubuntu
+Linux Release: 18.04
+
+[source layers/openembedded-core/oe-init-build-env][with previous config]
+
+===========================================================================
+Configuration files have been created for the following configuration:
+
+    DISTRO            :  openstlinux-weston
+    DISTRO_CODENAME   :  thud
+    MACHINE           :  stm32mp1
+    BB_NUMBER_THREADS :  <no-custom-config-set>
+    PARALLEL_MAKE     :  <no-custom-config-set>
+
+    BUILDDIR          :  build-openstlinuxweston-stm32mp1
+    DOWNLOAD_DIR      :  /home/max/stm32mp1/cache-yocto/downloads
+    SSTATE_DIR        :  /home/max/stm32mp1/cache-yocto/sstate-cache
+
+    SOURCE_MIRROR_URL :  <no-custom-config-set>
+    SSTATE_MIRRORS    :  <no-custom-config-set>
+
+    WITH_EULA_ACCEPTED:  YES
+
+===========================================================================
+
+Available images for OpenSTLinux layers are:
+
+  - Official OpenSTLinux images:
+      st-image-weston       -   OpenSTLinux weston image with basic Wayland support (if enable in distro)
+
+  - Other OpenSTLinux images:
+      - Supported images:
+          st-image-core         -   OpenSTLinux core image
+      - Proposed images as example only:
+          st-example-image-qt   -   ST example of image based on Qt framework   (require 'openstlinux-eglfs' distro)
+          st-example-image-x11  -   ST example of image based on X11            (require 'openstlinux-x11' distro)
+          st-example-image-xfce -   ST example of image based on XFCE framework (require 'openstlinux-x11' distro)
+          and more images are available on meta-st-openstlinux/recipes-samples/images.
+
+You can now run 'bitbake <image>'
+
+~/stm32mp1/openstlinux-20-02-19/build-openstlinuxweston-stm32mp1 $
+```
+
 ### Steps of creating the recipe by devtool
 
 These are the steps of using `devtool` to create a recipe for [cpputest_example]:
 
 1. Clone the source from github.
 
+   In order to avoid cluttering of the installation directory of OpenSTLinux distribution, I clone the `cpputest_example` to `~/stm32mp1/cpputest_example`. 
+
    ```text
+   ~/stm32mp1/openstlinux-20-02-19/build-openstlinuxweston-stm32mp1 $ cd ../..
    ~/stm32mp1 $ git clone https://github.com/maxpeng/cpputest_example.git
    ```
 
 2. Create the workspace.
 
+   I explicitly create the workspace as `w1` instead of the default one `workspace`.
+
    ```text
-   max@p50-2:~/work/st/stm32mp1 $ devtool create-workspace w1
+   max@p50-2:~/stm32mp1 $ devtool create-workspace w1
    NOTE: Starting bitbake server...
 
    ~/stm32mp1 $ tree -L 1
@@ -95,7 +153,7 @@ These are the steps of using `devtool` to create a recipe for [cpputest_example]
    To add a recipe from the given source source, use this short form of `devtool add` command:
 
    ```text
-   devtool add recipename srctree
+   $ devtool add recipename srctree
 
    Adds a new recipe to the workspace to build a specified source tree.
 
@@ -208,6 +266,30 @@ These are the steps of using `devtool` to create a recipe for [cpputest_example]
    NOTE: cpputest-example: compiling from external source tree /home/max/stm32mp1/cpputest_example
    NOTE: Tasks Summary: Attempted 534 tasks of which 525 didn't need to be rerun and all succeeded.
    NOTE: Writing buildhistory
+   ```
+
+5. Test the built executable by deploying to the target hardware.
+
+   ```text
+   ~/stm32mp1 $ devtool deploy-target cpputest-example root@1921.168.5.51
+   ```
+
+   Where `192.168.6.51` is the IP address of [STM32MP157C-DK2 discovery board] in my setup.
+
+   Log into the board and test the executable:
+
+   ```text
+   ~/stm32mp1 $ ssh root@102.168.6.5
+   root@stm32mp1:~# which cpputest_example_pythagorean
+   /usr/bin/cpputest_example_pythagorean
+   root@stm32mp1:~# cpputest_example_pythagorean
+   Hypotenuse of a right triangle with 2 sides as (30, 40) is 50.00.
+   ```
+
+6. Optionally undeploy the executable from the target hardware.
+
+   ```text
+   ~/stm32mp1 $ devtool undeploy-target cpputest-example root@1921.168.5.51
    ```
 
 In the next part - [Part 2 - Using bitbake-layers to add the recipe to the build environment](add_the_layer_by_bitbake-layers.md), I will describe how to use `bitbake-layers` to create a new layer, populate the recipe to the new  layer, and finally add the new layer to the build environment.

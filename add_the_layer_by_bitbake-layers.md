@@ -2,6 +2,7 @@
 
 ## Part 2 - Using bitbake-layers to add the recipe to the build environment
 
+### `bitbake-layers` command
 Yocto/OpenEmbedded provides a BitBake layer management tool called `bitbake-layers`. Using the `--help` option gives you a list of subcommands.
 
 ```text
@@ -40,6 +41,8 @@ subcommands:
 
 Use bitbake-layers <subcommand> --help to get help on a specific command
 ```
+
+### Steps of adding the recipe to the build environment
 
 1. Create `meta-example` layer directory.
 
@@ -191,9 +194,6 @@ Use bitbake-layers <subcommand> --help to get help on a specific command
    meta                  /home/max/stm32mp1/openstlinux-20-02-19/layers/openembedded-core/meta  5
    meta-custom           /home/max/stm32mp1/meta-custom    7
    ```
-   
-  
-
 
 ## References
 
